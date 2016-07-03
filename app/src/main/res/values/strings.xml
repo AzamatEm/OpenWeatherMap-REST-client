@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">OWMClient</string>
+    <string name="get_weather_button">OK</string>
+    <string name="city_name_et_hint">City name</string>
+
+    <string name="day_temp">day: %1$f</string>
+    <string name="morn_temp">morning: %1$f</string>
+    <string name="evening_temp">evening: %1$f</string>
+    <string name="night_temp">night: %1$f</string>
+    <string name="humidity">humidity: %1$d</string>
+    <string name="pressure">pressure: %1$f</string>
+    
+    <string name="empty_list_toast">there is no forecast</string>
+</resources>
