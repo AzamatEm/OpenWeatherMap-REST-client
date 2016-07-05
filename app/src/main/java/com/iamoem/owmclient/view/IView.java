@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by AzamatMurzagalin on 02.07.2016.
  */
-public interface View {
+public interface IView {
     void showWeather(List<WeatherView> weather);
     void showError(String error);
     void showEmptyWeather();

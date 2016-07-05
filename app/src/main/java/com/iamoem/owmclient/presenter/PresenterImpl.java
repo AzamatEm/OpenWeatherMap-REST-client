@@ -1,35 +1,43 @@
 package com.iamoem.owmclient.presenter;
 
-import com.iamoem.owmclient.model.Model;
-import com.iamoem.owmclient.model.ModelImpl;
+import com.iamoem.owmclient.di.ComponentProvider;
+import com.iamoem.owmclient.model.IModel;
 import com.iamoem.owmclient.presenter.mappers.ListWeatherViewMapper;
-import com.iamoem.owmclient.view.View;
+import com.iamoem.owmclient.view.IView;
+
+import javax.inject.Inject;
 
 import rx.Subscription;
-import rx.subscriptions.Subscriptions;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by AzamatMurzagalin on 02.07.2016.
  */
-public class PresenterImpl implements Presenter{
+public class PresenterImpl implements IPresenter {
 
-    private Model model = new ModelImpl();
-    private View view;
-    private Subscription subscription = Subscriptions.empty();
+    IView view;
 
-    public PresenterImpl(View view) {
+    @Inject
+    CompositeSubscription compositeSubscription;
+    @Inject
+    IModel model;
+    @Inject
+    ListWeatherViewMapper listweathermapper;
+
+    public PresenterImpl() {
+        ComponentProvider.getComponent().inject(this);
+    }
+
+    public void onCreate(IView view) {
         this.view = view;
     }
 
     @Override
     public void onGetWeatherClick(String cityName) {
-        if(!subscription.isUnsubscribed()) {
-            subscription.unsubscribe();
-        }
 
-        subscription = model.getCurrentWeather(cityName, "fd5b9b9e7b0a3099869316588463f020")
+        Subscription subscription = model.getCurrentWeather(cityName, "fd5b9b9e7b0a3099869316588463f020")
                 .map(ListWeather -> ListWeather.getList())
-                .map(new ListWeatherViewMapper())
+                .map(listweathermapper)
                 .subscribe(
                     weatherViews -> {
                         if(weatherViews.size() != 0) {
@@ -40,12 +48,12 @@ public class PresenterImpl implements Presenter{
                     },
                     e -> view.showError(e.getMessage())
                 );
+
+        compositeSubscription.add(subscription);
     }
 
     @Override
     public void onStop() {
-        if (!subscription.isUnsubscribed()) {
-            subscription.unsubscribe();
-        }
+        compositeSubscription.clear();
     }
 }

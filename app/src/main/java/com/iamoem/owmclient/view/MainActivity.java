@@ -1,7 +1,7 @@
 package com.iamoem.owmclient.view;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
@@ -9,30 +9,39 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.iamoem.owmclient.R;
-import com.iamoem.owmclient.presenter.Presenter;
-import com.iamoem.owmclient.presenter.PresenterImpl;
+import com.iamoem.owmclient.di.ComponentProvider;
+import com.iamoem.owmclient.presenter.IPresenter;
 import com.iamoem.owmclient.presenter.viewobjects.WeatherView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View {
+import javax.inject.Inject;
 
-    private EditText cityNameEt;
-    private Presenter presenter;
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
+public class MainActivity extends AppCompatActivity implements IView {
+
+    @Bind(R.id.city_name_et) EditText cityNameEt;
+    @Bind(R.id.get_weather_btn) Button getWeatherBtn;
+    @Bind(R.id.weather_recycler_view) RecyclerView recyclerView;
+
+    @Inject IPresenter presenter;
+
     private WeatherListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
-        presenter = new PresenterImpl(this);
+        ComponentProvider.getComponent().inject(this);
 
-        cityNameEt = (EditText) findViewById(R.id.city_name_et);
-        Button getWeatherBtn = (Button) findViewById(R.id.get_weather_btn);
+        presenter.onCreate(this);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.weather_recycler_view);
+        //set parameters to recycler view
         List<WeatherView> data = new ArrayList<>();
         adapter = new WeatherListAdapter(data, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

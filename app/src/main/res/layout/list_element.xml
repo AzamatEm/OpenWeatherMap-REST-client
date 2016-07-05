@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <TextView
-        android:id="@+id/nigh_temp_tv"
+        android:id="@+id/night_temp_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <TextView

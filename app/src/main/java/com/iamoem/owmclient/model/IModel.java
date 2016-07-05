@@ -8,6 +8,6 @@ import rx.Observable;
 /**
  * Created by AzamatMurzagalin on 02.07.2016.
  */
-public interface Model {
+public interface IModel {
     Observable<ListWeather> getCurrentWeather(String cityName, String id);
 }

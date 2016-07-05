@@ -13,6 +13,9 @@ import com.iamoem.owmclient.presenter.viewobjects.WeatherView;
 
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * Created by AzamatMurzagalin on 03.07.2016.
  */
@@ -50,6 +53,7 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
         holder.nightTempTv.setText(String.format(res.getString(R.string.night_temp), weatherView.getNightTemp()));
         holder.humidityTv.setText(String.format(res.getString(R.string.humidity), weatherView.getHumidity()));
         holder.pressureTv.setText(String.format(res.getString(R.string.pressure), weatherView.getPressure()));
+        holder.descriptionTv.setText(weatherView.getDescription());
     }
 
     @Override
@@ -58,23 +62,17 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        TextView descriptionTv;
-        TextView morningTempTv;
-        TextView dayTempTv;
-        TextView eveningTempTv;
-        TextView nightTempTv;
-        TextView humidityTv;
-        TextView pressureTv;
+        @Bind(R.id.description_tv) TextView descriptionTv;
+        @Bind(R.id.morning_temp_tv) TextView morningTempTv;
+        @Bind(R.id.day_temp_tv) TextView dayTempTv;
+        @Bind(R.id.eve_temp_tv) TextView eveningTempTv;
+        @Bind(R.id.night_temp_tv) TextView nightTempTv;
+        @Bind(R.id.humidity_tv) TextView humidityTv;
+        @Bind(R.id.pressure_tv) TextView pressureTv;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            descriptionTv = (TextView) itemView.findViewById(R.id.description_tv);
-            morningTempTv = (TextView) itemView.findViewById(R.id.morning_temp_tv);
-            dayTempTv = (TextView) itemView.findViewById(R.id.day_temp_tv);
-            eveningTempTv = (TextView) itemView.findViewById(R.id.eve_temp_tv);
-            nightTempTv = (TextView) itemView.findViewById(R.id.nigh_temp_tv);
-            humidityTv = (TextView) itemView.findViewById(R.id.humidity_tv);
-            pressureTv = (TextView) itemView.findViewById(R.id.pressure_tv);
+            ButterKnife.bind(this, itemView);
         }
     }
 }
