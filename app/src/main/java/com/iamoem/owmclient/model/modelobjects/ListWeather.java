@@ -27,6 +27,14 @@ public class ListWeather {
     @Expose
     private List<DailyWeather> list = new ArrayList<DailyWeather>();
 
+    public ListWeather(City city, String cod, Double message, Integer cnt, List<DailyWeather> list) {
+        this.city = city;
+        this.cod = cod;
+        this.message = message;
+        this.cnt = cnt;
+        this.list = list;
+    }
+
     /**
      * 
      * @return

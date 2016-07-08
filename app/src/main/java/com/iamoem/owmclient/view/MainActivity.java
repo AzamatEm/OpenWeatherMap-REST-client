@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.iamoem.owmclient.R;
-import com.iamoem.owmclient.di.ComponentProvider;
+import com.iamoem.owmclient.di.AppDI;
 import com.iamoem.owmclient.presenter.IPresenter;
 import com.iamoem.owmclient.presenter.viewobjects.WeatherView;
 
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements IView {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        ComponentProvider.getComponent().inject(this);
+        AppDI.getComponent().inject(this);
 
         presenter.onCreate(this);
 
@@ -55,18 +55,18 @@ public class MainActivity extends AppCompatActivity implements IView {
 
     @Override
     public void showWeather(List<WeatherView> weather) {
-        adapter.setData(weather);
-        adapter.notifyDataSetChanged();
+
+        if(weather.size() > 0) {
+            adapter.setData(weather);
+            adapter.notifyDataSetChanged();
+        } else {
+            Toast.makeText(this, getString(R.string.empty_list_toast), Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
     public void showError(String error){
         Toast.makeText(this, error, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void showEmptyWeather() {
-        Toast.makeText(this, getString(R.string.empty_list_toast), Toast.LENGTH_LONG).show();
     }
 
     @Override

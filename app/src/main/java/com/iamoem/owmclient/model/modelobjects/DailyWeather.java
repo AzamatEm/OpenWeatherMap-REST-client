@@ -5,6 +5,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class DailyWeather {
@@ -36,6 +37,18 @@ public class DailyWeather {
     @SerializedName("rain")
     @Expose
     private Double rain;
+
+    public DailyWeather(Integer dt, Temp temp, Double pressure, Integer humidity, List<Weather> weather, Double speed, Integer deg, Integer clouds, Double rain) {
+        this.dt = dt;
+        this.temp = temp;
+        this.pressure = pressure;
+        this.humidity = humidity;
+        this.weather = weather;
+        this.speed = speed;
+        this.deg = deg;
+        this.clouds = clouds;
+        this.rain = rain;
+    }
 
     /**
      * 

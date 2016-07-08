@@ -1,8 +1,9 @@
 package com.iamoem.owmclient.presenter;
 
-import com.iamoem.owmclient.di.ComponentProvider;
+import com.iamoem.owmclient.di.AppDI;
 import com.iamoem.owmclient.model.IModel;
 import com.iamoem.owmclient.presenter.mappers.ListWeatherViewMapper;
+import com.iamoem.owmclient.utility.Constants;
 import com.iamoem.owmclient.view.IView;
 
 import javax.inject.Inject;
@@ -25,7 +26,7 @@ public class PresenterImpl implements IPresenter {
     ListWeatherViewMapper listweathermapper;
 
     public PresenterImpl() {
-        ComponentProvider.getComponent().inject(this);
+        AppDI.getComponent().inject(this);
     }
 
     public void onCreate(IView view) {
@@ -35,15 +36,13 @@ public class PresenterImpl implements IPresenter {
     @Override
     public void onGetWeatherClick(String cityName) {
 
-        Subscription subscription = model.getCurrentWeather(cityName, "fd5b9b9e7b0a3099869316588463f020")
+        Subscription subscription = model.getCurrentWeather(cityName, Constants.APPID)
                 .map(ListWeather -> ListWeather.getList())
                 .map(listweathermapper)
                 .subscribe(
                     weatherViews -> {
                         if(weatherViews.size() != 0) {
                             view.showWeather(weatherViews);
-                        } else {
-                            view.showEmptyWeather();
                         }
                     },
                     e -> view.showError(e.getMessage())

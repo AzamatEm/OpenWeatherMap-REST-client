@@ -10,5 +10,4 @@ import java.util.List;
 public interface IView {
     void showWeather(List<WeatherView> weather);
     void showError(String error);
-    void showEmptyWeather();
 }

@@ -1,9 +1,9 @@
 package com.iamoem.owmclient.di;
 
-import com.google.common.util.concurrent.AbstractScheduledService;
-import com.iamoem.owmclient.model.api.OWMModule;
 import com.iamoem.owmclient.model.api.OWMService;
 import com.iamoem.owmclient.utility.Constants;
+
+import static org.mockito.Mockito.mock;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -15,29 +15,28 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by AzamatMurzagalin on 05.07.2016.
+ * Created by AzamatMurzagalin on 06.07.2016.
  */
 @Module
-public class ModelModule {
+public class TestModelModule {
 
     @Provides
     @Singleton
     OWMService provideApiInterface() {
-        return OWMModule.getService(Constants.baseUrl);
+        return mock(OWMService.class);
     }
-
 
     @Provides
     @Singleton
     @Named(Constants.ioThreadName)
     Scheduler provideIoScheduler() {
-        return Schedulers.io();
+        return Schedulers.immediate();
     }
 
     @Provides
     @Singleton
     @Named(Constants.mainThreadName)
     Scheduler provideMainScheduler() {
-        return AndroidSchedulers.mainThread();
+        return Schedulers.immediate();
     }
 }

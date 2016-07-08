@@ -25,6 +25,15 @@ public class Temp {
     @Expose
     private Double morn;
 
+    public Temp(Double day, Double min, Double max, Double night, Double eve, Double morn) {
+        this.day = day;
+        this.min = min;
+        this.max = max;
+        this.night = night;
+        this.eve = eve;
+        this.morn = morn;
+    }
+
     /**
      * 
      * @return
