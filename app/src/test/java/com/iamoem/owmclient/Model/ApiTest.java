@@ -45,7 +45,7 @@ public class ApiTest {
      * @throws IOException
      */
     @Before
-    public void setUp() throws IOException {
+    public void preparation() throws IOException {
 
         server = new MockWebServer();
         server.start();

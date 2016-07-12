@@ -42,12 +42,15 @@ public class ModelTests {
     @Inject
     OWMService owmService;
 
+    @Inject
+    ListWeather list;
+
     IModel model;
 
     String testCity = "London";
 
     @Before
-    public void setUp() {
+    public void preparation() {
         //inject OWMService
         component = (TestApplicationComponent) TestAppDI.getComponent();
         component.inject(this);
@@ -58,17 +61,6 @@ public class ModelTests {
     @Test
     public void testGetCurrentWeather() {
         //create test ListWeather
-        Temp firstTemp = new Temp(10., 9., 15., 9., 12., 10.);
-        Temp secondTemp = new Temp(11., 10., 16., 10., 13., 11.);
-        Weather firstWeather = new Weather(0, "Clouds", "Scattered clouds", "00");
-        Weather secondWeather = new Weather(0, "Rain", "rain", "01");
-        DailyWeather firstElement = new DailyWeather(0, firstTemp, 11., 10,
-                Collections.singletonList(firstWeather), 11., 12, 5, 6.);
-        DailyWeather secondElement = new DailyWeather(1, secondTemp, 12., 11,
-                Collections.singletonList(secondWeather), 12., 19, 8, 7.);
-        ListWeather list = new ListWeather(null, "0", 0., 2, Arrays.asList(firstElement, secondElement));
-
-
         when(owmService.getCurrentWeather(testCity, Constants.APPID)).thenReturn(Observable.just(list));
 
         TestSubscriber<ListWeather> testSubscriber = new TestSubscriber<>();

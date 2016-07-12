@@ -27,7 +27,8 @@ public class MainActivity extends AppCompatActivity implements IView {
     @Bind(R.id.get_weather_btn) Button getWeatherBtn;
     @Bind(R.id.weather_recycler_view) RecyclerView recyclerView;
 
-    @Inject IPresenter presenter;
+    @Inject
+    IPresenter presenter;
 
     private WeatherListAdapter adapter;
 
@@ -55,14 +56,15 @@ public class MainActivity extends AppCompatActivity implements IView {
 
     @Override
     public void showWeather(List<WeatherView> weather) {
-
-        if(weather.size() > 0) {
-            adapter.setData(weather);
-            adapter.notifyDataSetChanged();
-        } else {
-            Toast.makeText(this, getString(R.string.empty_list_toast), Toast.LENGTH_LONG).show();
-        }
+        adapter.setData(weather);
+        adapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void showEmptyWeather() {
+        Toast.makeText(this, getString(R.string.empty_list_toast), Toast.LENGTH_LONG).show();
+    }
+
 
     @Override
     public void showError(String error){
@@ -72,8 +74,6 @@ public class MainActivity extends AppCompatActivity implements IView {
     @Override
     protected void onStop() {
         super.onStop();
-        if(presenter != null) {
-            presenter.onStop();
-        }
+        presenter.onStop();
     }
 }

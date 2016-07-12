@@ -22,6 +22,10 @@ public class ListWeatherViewMapper implements Func1<List<DailyWeather>, List<Wea
 
     @Override
     public List<WeatherView> call(List<DailyWeather> dailyWeathers) {
+        if(dailyWeathers == null || dailyWeathers.size() == 0) {
+            return null;
+        }
+
         List<WeatherView> weatherViewList = Observable.from(dailyWeathers)
                 .map(dailyWeather -> new WeatherView(dailyWeather))
                 .toList()

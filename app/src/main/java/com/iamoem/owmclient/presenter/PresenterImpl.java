@@ -37,12 +37,14 @@ public class PresenterImpl implements IPresenter {
     public void onGetWeatherClick(String cityName) {
 
         Subscription subscription = model.getCurrentWeather(cityName, Constants.APPID)
-                .map(ListWeather -> ListWeather.getList())
+                .map(ListWeather -> ListWeather != null ? ListWeather.getList() : null)
                 .map(listweathermapper)
                 .subscribe(
                     weatherViews -> {
-                        if(weatherViews.size() != 0) {
+                        if(weatherViews != null && weatherViews.size() != 0) {
                             view.showWeather(weatherViews);
+                        } else {
+                            view.showEmptyWeather();
                         }
                     },
                     e -> view.showError(e.getMessage())
