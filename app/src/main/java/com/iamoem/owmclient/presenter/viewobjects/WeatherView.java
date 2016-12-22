@@ -33,6 +33,8 @@ public class WeatherView {
 
     private Double rain;
 
+    private String icon;
+
 
     public WeatherView(DailyWeather dailyWeather) {
         dt = dailyWeather.getDt();
@@ -53,6 +55,7 @@ public class WeatherView {
         if(dailyWeather.getWeather() != null &&
                 dailyWeather.getWeather().size() > 0) {
             description = dailyWeather.getWeather().get(0).getDescription();
+            icon = dailyWeather.getWeather().get(0).getIcon();
         }
     }
 
@@ -150,5 +153,13 @@ public class WeatherView {
 
     public void setRain(Double rain) {
         this.rain = rain;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 }

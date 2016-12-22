@@ -11,4 +11,6 @@
     <string name="pressure">pressure: %1$f</string>
     
     <string name="empty_list_toast">there is no forecast</string>
+    <string name="title_weather">OWM Client</string>
+    <string name="search_hint">City name...</string>
 </resources>

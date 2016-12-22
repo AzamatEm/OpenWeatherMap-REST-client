@@ -40,8 +40,6 @@ import rx.Observable;
         sdk = 21,
         constants = BuildConfig.class)
 public class PresenterImplTest {
-
-
     @Inject
     IModel model;
 
@@ -73,6 +71,17 @@ public class PresenterImplTest {
         presenter.onStop();
 
         verify(view).showWeather(anyList());
+    }
+
+    @Test
+    public void testLoadingIndicator() {
+        doAnswer(invocation -> Observable.just(list)).
+                when(model).getCurrentWeather(testCity, Constants.APPID);
+        presenter.onGetWeatherClick(testCity);
+        presenter.onStop();
+
+        verify(view).showLoading();
+        verify(view).hideLoading();
     }
 
     @Test

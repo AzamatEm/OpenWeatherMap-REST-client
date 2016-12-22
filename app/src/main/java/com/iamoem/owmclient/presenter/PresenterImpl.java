@@ -39,6 +39,8 @@ public class PresenterImpl implements IPresenter {
         Subscription subscription = model.getCurrentWeather(cityName, Constants.APPID)
                 .map(ListWeather -> ListWeather != null ? ListWeather.getList() : null)
                 .map(listweathermapper)
+                .doOnSubscribe(() -> view.showLoading())
+                .doAfterTerminate(() -> view.hideLoading())
                 .subscribe(
                     weatherViews -> {
                         if(weatherViews != null && weatherViews.size() != 0) {
